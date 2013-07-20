@@ -10,9 +10,9 @@ end
 
 class Php < Formula
   homepage 'http://php.net'
-  url 'http://php.net/get/php-5.5.0.tar.bz2/from/this/mirror'
-  sha256 '29bb5ea45256f3983fab95af1f18d76dcc045565b2f175f11817069cefcf6cd1'
-  version '5.5.0'
+  url 'http://www.php.net/distributions/php-5.5.1.tar.bz2'
+  sha256 '4c221b9ba65e2084ae8900ef00c7f23966702e943203299b278bdc758fcfc733'
+  version '5.5.1'
 
   head 'https://github.com/php/php-src.git', :branch => 'PHP-5.5'
 
