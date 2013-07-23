@@ -20,6 +20,3 @@ brew install php
 ## List of formulae
 `php`
 `phpsh`
-
-## Changelog
-Updated formula to install PHP 5.5.1
