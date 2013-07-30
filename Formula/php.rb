@@ -51,6 +51,7 @@ class Php < Formula
       ['--with-cgi', 'Enable building of the CGI executable (implies --without-apache)'],
       ['--with-fpm', 'Enable building of the fpm SAPI executable (implies --without-apache)'],
       ['--without-apache', 'Build without shared Apache 2.0 Handler module'],
+      ['--with-homebrew-apache', 'Build using Homebrew\'s Apache 2 (/usr/local/bin/apxs)'],
       ['--with-intl', 'Include internationalization support'],
       ['--with-imap', 'Include IMAP extension'],
       ['--with-gmp', 'Include GMP support'],
@@ -75,7 +76,6 @@ class Php < Formula
       "--with-ndbm=/usr",
       "--enable-exif",
       "--enable-soap",
-      "--enable-sqlite-utf8",
       "--enable-wddx",
       "--enable-ftp",
       "--enable-sockets",
@@ -87,7 +87,6 @@ class Php < Formula
       "--enable-sysvmsg",
       "--enable-mbstring",
       "--enable-mbregex",
-      "--enable-zend-multibyte",
       "--enable-bcmath",
       "--enable-calendar",
       "--with-openssl=/usr",
@@ -131,7 +130,7 @@ class Php < Formula
     end
 
     unless ARGV.include? '--without-apache'
-      args << "--with-apxs2=/usr/sbin/apxs"
+      args << "--with-apxs2=#{apxs}"
       args << "--libexecdir=#{libexec}"
     end
 
@@ -171,8 +170,8 @@ class Php < Formula
 
     unless ARGV.include? '--without-apache'
       inreplace "Makefile",
-        "INSTALL_IT = $(mkinstalldirs) '$(INSTALL_ROOT)/usr/libexec/apache2' && $(mkinstalldirs) '$(INSTALL_ROOT)/private/etc/apache2' && /usr/sbin/apxs -S LIBEXECDIR='$(INSTALL_ROOT)/usr/libexec/apache2' -S SYSCONFDIR='$(INSTALL_ROOT)/private/etc/apache2' -i -a -n php5 libs/libphp5.so",
-        "INSTALL_IT = $(mkinstalldirs) '#{libexec}/apache2' && $(mkinstalldirs) '$(INSTALL_ROOT)/private/etc/apache2' && /usr/sbin/apxs -S LIBEXECDIR='#{libexec}/apache2' -S SYSCONFDIR='$(INSTALL_ROOT)/private/etc/apache2' -i -a -n php5 libs/libphp5.so"
+        /INSTALL_IT = \$\(mkinstalldirs\) '\$\(INSTALL_ROOT\).*?' && \$\(mkinstalldirs\) '\$\(INSTALL_ROOT\).*?' && .*?\/apxs -S LIBEXECDIR='\$\(INSTALL_ROOT\).*?' -S SYSCONFDIR='\$\(INSTALL_ROOT\).*?' -i -a -n php5 libs\/libphp5.so/,
+        "INSTALL_IT = $(mkinstalldirs) '#{libexec}/apache2' && $(mkinstalldirs) '$(INSTALL_ROOT)/private/etc/apache2' && #{apxs} -S LIBEXECDIR='#{libexec}/apache2' -S SYSCONFDIR='$(INSTALL_ROOT)/private/etc/apache2' -i -n php5 libs/libphp5.so"
     end
 
     if ARGV.include? '--with-intl'
@@ -199,7 +198,7 @@ class Php < Formula
     end
   end
 
- def caveats; <<-EOS
+  def caveats; <<-EOS
 For 10.5 and Apache:
     Apache needs to run in 32-bit mode. You can either force Apache to start
     in 32-bit mode or you can thin the Apache executable.
@@ -223,7 +222,7 @@ If you have installed the formula with --with-fpm, to launch php-fpm on startup:
 
 You may also need to edit the plist to use the correct "UserName".
    EOS
- end
+  end
 
   def test
     if ARGV.include?('--with-fpm')
@@ -257,5 +256,13 @@ You may also need to edit the plist to use the correct "UserName".
     </dict>
     </plist>
     EOPLIST
+  end
+
+  def apxs
+    if ARGV.include? '--with-homebrew-apache' and File.exists? '/usr/local/bin/apxs'
+      '/usr/local/bin/apxs'
+    else
+      '/usr/sbin/apxs'
+    end
   end
 end
