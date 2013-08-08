@@ -65,12 +65,13 @@ If you have installed the formula with `--with-fpm`, to launch `php-fpm` on star
   mkdir -p ~/Library/LaunchAgents
   cp /usr/local/Cellar/php/<PHP_VERSION_HERE>/org.php-fpm.plist ~/Library/LaunchAgents/
   launchctl load -w ~/Library/LaunchAgents/org.php-fpm.plist
-```
+  ```
+
 * If this is an upgrade and you already have the org.php-fpm.plist loaded:
   ``` bash
   launchctl unload -w ~/Library/LaunchAgents/org.php-fpm.plist
   cp /usr/local/Cellar/php/<PHP_VERSION_HERE>/org.php-fpm.plist ~/Library/LaunchAgents/
   launchctl load -w ~/Library/LaunchAgents/org.php-fpm.plist
-```
+  ```
 
 You may also need to edit the plist to use the correct "UserName".
