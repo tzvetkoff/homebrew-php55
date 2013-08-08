@@ -19,16 +19,16 @@ class Php < Formula
   skip_clean ['bin', 'sbin']
 
   depends_on 'openssl' if MacOS.version == :leopard
-  depends_on 'freetds' if ARGV.include? '--with-mssql'
   depends_on 'gettext'
   depends_on 'freetype'
   depends_on 'libpng'
+  depends_on 'jpeg'
+  depends_on 'mcrypt'
+  depends_on 'freetds' if ARGV.include? '--with-mssql'
   depends_on 'gmp' if ARGV.include? '--with-gmp'
   depends_on 'icu4c' if ARGV.include? '--with-intl'
   depends_on 'imap-uw' if ARGV.include? '--with-imap'
-  depends_on 'jpeg'
   depends_on 'libevent' if ARGV.include? '--with-fpm'
-  depends_on 'mcrypt'
   depends_on 'unixodbc' if ARGV.include? '--with-unixodbc'
 
   if ARGV.include? '--with-pgsql'
@@ -45,13 +45,13 @@ class Php < Formula
 
   def options
     [
+      ['--with-apxs=/usr/sbin/apxs', 'Specify the location of the apxs script (to build for Apache different than the system one)'],
+      ['--without-apache', 'Build without shared Apache 2.0 Handler module'],
+      ['--with-cgi', 'Build only the CGI SAPI executable (implies --without-apache)'],
+      ['--with-fpm', 'Build only the FPM SAPI executable (implies --without-apache)'],
       ['--with-pgsql', 'Include PostgreSQL support'],
       ['--with-mssql', 'Include MSSQL-DB support'],
       ['--with-unixodbc', 'Include unixODBC support'],
-      ['--with-cgi', 'Enable building of the CGI executable (implies --without-apache)'],
-      ['--with-fpm', 'Enable building of the fpm SAPI executable (implies --without-apache)'],
-      ['--without-apache', 'Build without shared Apache 2.0 Handler module'],
-      ['--with-homebrew-apache', 'Build using Homebrew\'s Apache 2 (/usr/local/bin/apxs)'],
       ['--with-intl', 'Include internationalization support'],
       ['--with-imap', 'Include IMAP extension'],
       ['--with-gmp', 'Include GMP support'],
@@ -114,7 +114,7 @@ class Php < Formula
       "--with-mysql=mysqlnd",
       "--with-pdo-mysql=mysqlnd",
       "--with-libedit",
-      "--mandir=#{man}"
+      "--mandir=#{man}",
     ]
 
     args << "--with-homebrew-openssl" if MacOS.version == :leopard
@@ -204,10 +204,22 @@ For 10.5 and Apache:
     in 32-bit mode or you can thin the Apache executable.
 
 To enable PHP in Apache add the following to httpd.conf and restart Apache:
-    LoadModule php5_module    #{libexec}/apache2/libphp5.so
+    LoadModule php5_module #{libexec}/apache2/libphp5.so
+
+    <IfModule php5_module>
+        AddType application/x-httpd-php .php
+        AddType application/x-httpd-php-source .phps
+
+        <IfModule dir_module>
+            DirectoryIndex index.html index.php
+        </IfModule>
+    </IfModule>
 
 The php.ini file can be found in:
     #{etc}/php.ini
+
+Additional php.ini files are loaded from:
+    #{etc}/php.ini.d
 
 If you have installed the formula with --with-fpm, to launch php-fpm on startup:
     * If this is your first install:
@@ -259,10 +271,6 @@ You may also need to edit the plist to use the correct "UserName".
   end
 
   def apxs
-    if ARGV.include? '--with-homebrew-apache' and File.exists? '/usr/local/bin/apxs'
-      '/usr/local/bin/apxs'
-    else
-      '/usr/sbin/apxs'
-    end
+    ARGV.value('with-apxs') || '/usr/sbin/apxs'
   end
 end
