@@ -10,9 +10,9 @@ end
 
 class Php < Formula
   homepage 'http://php.net'
-  url 'http://www.php.net/distributions/php-5.5.4.tar.bz2'
-  sha256 '49f87e8cf0bbec53a6e7f1c8ab132fcec37bb09990404c7c959f81dfb1637439'
-  version '5.5.4'
+  url 'http://www.php.net/distributions/php-5.5.5.tar.bz2'
+  sha256 'a400b324ae288eb0c9285e550fe5fd7f92c0f4e126496c3b05f9041da6cc04de'
+  version '5.5.5'
 
   head 'https://github.com/php/php-src.git', :branch => 'PHP-5.5'
 
@@ -51,7 +51,8 @@ class Php < Formula
       ['--with-fpm', 'Build only the FPM SAPI executable (implies --without-apache)'],
       ['--with-pgsql', 'Include PostgreSQL support'],
       ['--with-mssql', 'Include MSSQL-DB support'],
-      ['--with-unixodbc', 'Include unixODBC support'],
+      ['--with-unixodbc', 'Include ODBC support via `unixodbc\''],
+      ['--with-iodbc', 'Include ODBC support via `iODBC\''],
       ['--with-intl', 'Include internationalization support'],
       ['--with-imap', 'Include IMAP extension'],
       ['--with-gmp', 'Include GMP support'],
@@ -158,11 +159,11 @@ class Php < Formula
       args << "--with-pdo-pgsql=#{Formula.factory('postgresql').prefix}"
     end
 
-    if ARGV.include? '--with-unixodbc'
+    if ARGV.include? '--with-iodbc'
+      args << "--with-iodbc"
+    elsif ARGV.include? '--with-unixodbc'
       args << "--with-unixODBC=#{Formula.factory('unixodbc').prefix}"
       args << "--with-pdo-odbc=unixODBC,#{Formula.factory('unixodbc').prefix}"
-    else
-      args << "--with-iodbc"
     end
 
     system "./buildconf" if ARGV.build_head?

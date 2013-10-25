@@ -37,7 +37,8 @@ Available installation options:
 | `--with-intl`                | Include internationalization support                                                        |
 | `--with-mssql`               | Include MSSQL-DB support                                                                    |
 | `--with-pgsql`               | Include PostgreSQL support                                                                  |
-| `--with-unixodbc`            | Include unixODBC support                                                                    |
+| `--with-unixodbc`            | Include ODBC support via `unixodbc\'                                                        |
+| `--with-iodbc`               | Include ODBC support via `iODBC'                                                            |
 
 To enable PHP in Apache add the following to httpd.conf and restart Apache:
 
