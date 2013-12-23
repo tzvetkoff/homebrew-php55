@@ -29,16 +29,20 @@ Available installation options:
 | Option                       | Description                                                                                 |
 | ---------------------------- | ------------------------------------------------------------------------------------------- |
 | `--with-apxs=/usr/sbin/apxs` | Specify the location of the apxs script (to build for Apache different than the system one) |
+| `--without-pear`             | Build without PEAR                                                                          |
+| `--without-apache`           | Build without shared Apache 2.0 Handler module                                              |
 | `--with-cgi`                 | Build only the CGI SAPI executable (implies --without-apache)                               |
 | `--with-fpm`                 | Build only the FPM SAPI executable (implies --without-apache)                               |
-| `--without-apache`           | Build without shared Apache 2.0 Handler module                                              |
 | `--with-gmp`                 | Include GMP support                                                                         |
 | `--with-imap`                | Include IMAP extension                                                                      |
 | `--with-intl`                | Include internationalization support                                                        |
-| `--with-mssql`               | Include MSSQL-DB support                                                                    |
 | `--with-pgsql`               | Include PostgreSQL support                                                                  |
-| `--with-unixodbc`            | Include ODBC support via `unixodbc'                                                         |
+| `--with-mssql`               | Include MSSQL-DB support                                                                    |
 | `--with-iodbc`               | Include ODBC support via `iODBC'                                                            |
+| `--with-unixodbc`            | Include ODBC support via `unixodbc'                                                         |
+| `--with-homebrew-curl`       | Build against brewed CURL                                                                   |
+| `--with-homebrew-libxslt`    | Build against brewed LibXSLT                                                                |
+| `--with-homebrew-openssl`    | Build against brewed OpenSSL                                                                |
 
 To enable PHP in Apache add the following to httpd.conf and restart Apache:
 
