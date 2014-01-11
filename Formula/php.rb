@@ -6,9 +6,9 @@ end
 
 class Php < Formula
   homepage 'http://php.net'
-  url 'http://www.php.net/distributions/php-5.5.7.tar.bz2'
-  sha256 '2cb9425ef514b984dd233097d82a66f4623b9bf48f2ef265bc7ba25d697d6008'
-  version '5.5.7'
+  url 'http://www.php.net/distributions/php-5.5.8.tar.bz2'
+  sha256 '6d5f45659d13383fc8429f185cc9da0b30c7bb72dcae9baf568f0511eb7f8b68'
+  version '5.5.8'
 
   head 'https://github.com/php/php-src.git', :branch => 'PHP-5.5'
 
@@ -58,7 +58,7 @@ class Php < Formula
   end
 
   def patches
-    DATA
+    []
   end
 
   def install
@@ -292,18 +292,3 @@ You may also need to edit the plist to use the correct "UserName".
     ARGV.value('with-apxs') || '/usr/sbin/apxs'
   end
 end
-
-__END__
-diff --git a/configure b/configure
-index d506892..51617e8 100755
---- a/configure
-+++ b/configure
-@@ -38277,7 +38277,7 @@ fi
-   if test "$PHP_FREETYPE_DIR" != "no"; then
-
-     for i in $PHP_FREETYPE_DIR /usr/local /usr; do
--      if test -f "$i/include/freetype2/freetype/freetype.h"; then
-+      if test -f "$i/include/freetype2/freetype.h"; then
-         FREETYPE2_DIR=$i
-         FREETYPE2_INC_DIR=$i/include/freetype2
-         break
