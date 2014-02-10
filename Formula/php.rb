@@ -6,9 +6,9 @@ end
 
 class Php < Formula
   homepage 'http://php.net'
-  url 'http://www.php.net/distributions/php-5.5.8.tar.bz2'
-  sha256 '6d5f45659d13383fc8429f185cc9da0b30c7bb72dcae9baf568f0511eb7f8b68'
-  version '5.5.8'
+  url 'http://www.php.net/distributions/php-5.5.9.tar.bz2'
+  sha256 '9d1dea5195e2bcd928416130a6e19173d02bd36fb76c382522bf145c458fbed3'
+  version '5.5.9'
 
   head 'https://github.com/php/php-src.git', :branch => 'PHP-5.5'
 
@@ -222,7 +222,7 @@ class Php < Formula
 
   def caveats; <<-EOS
 To enable PHP in Apache add the following to httpd.conf and restart Apache:
-    LoadModule php5_module #{libexec}/apache2/libphp5.so
+    LoadModule php5_module /usr/local/opt/php/libexec/apache2/libphp5.so
 
     <IfModule php5_module>
         AddType application/x-httpd-php .php
