@@ -6,9 +6,9 @@ end
 
 class Php < Formula
   homepage 'http://php.net'
-  url 'http://www.php.net/distributions/php-5.5.11.tar.bz2'
-  sha256 '60e14c255f2a461a7a26639b84a2fc448cc2f91c8dead0e9fd00cd8ba27a2e96'
-  version '5.5.11'
+  url 'http://www.php.net/distributions/php-5.5.12.tar.bz2'
+  sha256 '519ee29e28532782676f3d8e31a808ffbfee383e0279ccc8cbd2b12ed53c2335'
+  version '5.5.12'
 
   head 'https://github.com/php/php-src.git', :branch => 'PHP-5.5'
 
