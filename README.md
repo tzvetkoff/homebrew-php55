@@ -1,3 +1,7 @@
+# RETIRED
+
+This repo is no longer maintained.
+Consider using [homebrew/php](https://github.com/Homebrew/homebrew-php).
 
 # Homebrew-PHP55
 
